@@ -9,24 +9,25 @@
 <a href="/logout">Logout</a>
 </h1>
 
-Title
+<h2>
+<ol>
+    {{#formStrings}}
+        <li>
+            {{.}}
+        </li>
+    {{/formStrings}}
+</ol>
+</h2>
+
 
 <form action="/form" method="post">
+    Title
     <input type="text" placeholder="title" name="title"/>
-</form>
 
-Genre
-<form action="/form" method="post">
+    Genre
     <input type="text" placeholder="genre" name="genre"/>
-</form>
 
-Year
-<form action="/form" method="post">
-    <input type="text" placeholder="year" name="year"/>
-</form>
-
-System
-<form action="/form" method="post">
+    System
     <input type="text" placeholder="system" name="system"/>
     <button type="submit">Submit</button>
 </form>

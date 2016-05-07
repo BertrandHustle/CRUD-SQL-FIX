@@ -8,7 +8,6 @@ public class User {
     //properties
     String name;
     String password;
-    static ArrayList<String> messages = new ArrayList<>();
 
     public User(String name, String password) {
         this.name = name;

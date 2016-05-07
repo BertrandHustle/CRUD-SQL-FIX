@@ -1,15 +1,20 @@
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import static spark.Spark.halt;
 
 public class Main {
 
-    public static void main (String[] args){
+    //list of forms (used to get forms by identity)
+    static ArrayList<Form> formList = new ArrayList<>();
 
-         HashMap<String, User> userList = new HashMap<>();
-         HashMap<User, Form> forms = new HashMap();
+    //list of forms in string form
+    static ArrayList<String> formStrings = new ArrayList<>();
+
+    public static void main (String[] args){
 
         Spark.get(
                 "/",
@@ -28,6 +33,7 @@ public class Main {
                             //returns new messages page
                             String userName = request.session().attribute("userName");
                             hash.put("userName", userName);
+                            hash.put("formStrings", formStrings);
                             return new ModelAndView(hash, "form.mustache");
                         }
 
@@ -82,25 +88,31 @@ public class Main {
                 "/form",
                 (request, response) -> {
 
+                    HashMap hash = new HashMap();
+
                     //creates new form
 
                     String title = request.queryParams("title");
                     String genre = request.queryParams("genre");
-                    String year = request.queryParams("year");
                     String system = request.queryParams("system");
                     String userName = request.session().attribute("userName");
 
-                    //puts new form into hashmap
-
-                    Form form = new Form(title, genre, year, system);
-                    forms.put(userList.get(userName), form);
+                    //puts new form into arraylist (in string form)
+                    Form form = new Form(title, genre, system);
+                    formList.add(form);
+                    formStrings.add(form.toString());
+                    System.out.println((formStrings.get(0)));
 
                     //reloads page
                     response.redirect("/");
                     halt();
+
                     return "";
                 }
+
+
         );
+
 
     }
 

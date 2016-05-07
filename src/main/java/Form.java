@@ -5,13 +5,11 @@ public class Form {
 
     String title;
     String genre;
-    String year;
     String system;
 
-    public Form(String title, String genre, String year, String system) {
+    public Form(String title, String genre, String system) {
         this.title = title;
         this.genre = genre;
-        this.year = year;
         this.system = system;
     }
 
@@ -31,19 +29,15 @@ public class Form {
         this.genre = genre;
     }
 
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
     public String getSystem() {
         return system;
     }
 
     public void setSystem(String system) {
         this.system = system;
+    }
+
+    public String toString() {
+        return(title + " " + genre + " " + system);
     }
 }
