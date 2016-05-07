@@ -97,11 +97,18 @@ public class Main {
                     String system = request.queryParams("system");
                     String userName = request.session().attribute("userName");
 
+
+                    //if user clicks edit
+
+                    //if user clicks delete
+
+                    //if user clicks "submit"
+
                     //puts new form into arraylist (in string form)
                     Form form = new Form(title, genre, system);
                     formList.add(form);
                     formStrings.add(form.toString());
-                    System.out.println((formStrings.get(0)));
+                    //System.out.println((formStrings.get(0)));
 
                     //reloads page
                     response.redirect("/");
@@ -111,6 +118,28 @@ public class Main {
                 }
 
 
+        );
+
+        Spark.get(
+                "/edit",
+                (request, response) -> {
+                    HashMap hash = new HashMap();
+                    return new ModelAndView(hash, "edit.mustache");
+                },
+                new MustacheTemplateEngine()
+        );
+
+        Spark.post(
+                "/delete",
+                (request, response) -> {
+
+                    formList.remove(Integer.parseInt("number"));
+
+                    response.redirect("/");
+                    halt();
+                    return "";
+
+                }
         );
 
 
