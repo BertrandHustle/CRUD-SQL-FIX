@@ -1,9 +1,7 @@
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
-
 import java.util.HashMap;
-
 import static spark.Spark.halt;
 
 public class Main {
@@ -48,7 +46,7 @@ public class Main {
 
                     String userName = request.queryParams("loginName");
 
-                    if (request.session().attributes().contains("userName")){
+                    if (!request.session().attributes().contains("userName")){
 
                         //puts current userName/Password in session
                         request.session().attribute("userName", userName);
@@ -98,7 +96,7 @@ public class Main {
                     forms.put(userList.get(userName), form);
 
                     //reloads page
-                    response.redirect("/form");
+                    response.redirect("/");
                     halt();
                     return "";
                 }
