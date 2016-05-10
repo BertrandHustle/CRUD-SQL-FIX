@@ -9,8 +9,7 @@ public class Main {
 
     //list of forms (used to get forms by identity)
     static ArrayList<Form> formList = new ArrayList<>();
-
-    static int currentID;
+    //static HashMap<Integer, Form> formIntegerHashMap = new HashMap<>();
 
     public static void main (String[] args){
 
@@ -32,7 +31,7 @@ public class Main {
                             String userName = request.session().attribute("userName");
                             hash.put("userName", userName);
                             hash.put("formList", formList);
-                            hash.put("number", request.session().attribute("ID"));
+                            //hash.put("formID", formIntegerHashMap);
 
                             return new ModelAndView(hash, "form.mustache");
                         }
@@ -81,8 +80,6 @@ public class Main {
                 }
         );
 
-        //may need a get request for form.mustache here
-
         //main entry form
         Spark.post(
                 "/form",
@@ -104,19 +101,19 @@ public class Main {
                         ID = formList.get(formList.size()-1).getID()+1;
                     }
 
-                    //currentID = ID;
-
                     String userName = request.session().attribute("userName");
 
-                    //puts new form into arraylist (in string form)
+                    //puts new form into arraylist
                     Form form = new Form(title, genre, system, ID);
                     formList.add(form);
 
-                    request.session().attribute("ID", ID);
+                    //puts new form into hashmap by ID
+                    //formIntegerHashMap.put(ID, form);
 
-                    //this is the ID we pass into the mustache
-                    hash.put("number", ID);
+                    //this is what we pass into the mustache
+                    hash.put("form", form);
                     hash.put("formList", formList);
+                    //hash.put("formID", formIntegerHashMap);
 
                     //reloads page
 
@@ -130,8 +127,21 @@ public class Main {
                 "/edit",
                 (request, response) -> {
                     HashMap hash = new HashMap();
-                    int ID = request.session().attribute("ID");
-                    Form form = formList.get(ID);
+                    int ID = Integer.parseInt(request.queryParams("number"));
+
+                    int index = 0;
+
+                    try {
+                        for (Form form : formList) {
+                            if (form.getID() == ID){
+                                index = formList.indexOf(form);
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException ioe){
+                        response.redirect("/");
+                    }
+
+                    Form form = formList.get(index);
                     hash.put("form", form);
 
                     return new ModelAndView(hash, "edit.mustache");
@@ -143,12 +153,25 @@ public class Main {
                 "/edit",
                 (request, response) -> {
                     HashMap hash = new HashMap();
-                    int ID = request.session().attribute("ID");
-                    Form form = formList.get(ID);
+                    int ID = Integer.parseInt(request.queryParams("change"));
 
-                    (formList.get(ID)).setTitle(request.queryParams("title"));
-                    (formList.get(ID)).setGenre(request.queryParams("genre"));
-                    (formList.get(ID)).setSystem(request.queryParams("system"));
+                    int index = 0;
+
+                    try {
+                        for (Form form : formList) {
+                            if (form.getID() == ID){
+                                index = formList.indexOf(form);
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException ioe){
+                        response.redirect("/");
+                    }
+
+                    Form form = formList.get(index);
+
+                    form.setTitle(request.queryParams("title"));
+                    form.setGenre(request.queryParams("genre"));
+                    form.setSystem(request.queryParams("system"));
 
                     hash.put("form", form);
 
@@ -158,17 +181,26 @@ public class Main {
                 }
         );
 
-        //make this a get?
-
         Spark.post(
                 "/delete",
                 (request, response) -> {
 
-                    try {
-                        formList.remove(formList.get(Integer.parseInt(request.queryParams("number"))));
-                    } catch (IndexOutOfBoundsException ioobe){
+                    //make this its own method
 
+                    int ID = Integer.parseInt(request.queryParams("number"));
+                    int index = 0;
+
+                    try {
+                        for (Form form : formList) {
+                            if (form.getID() == ID){
+                                index = formList.indexOf(form);
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException ioe){
+                        response.redirect("/");
                     }
+
+                    formList.remove(index);
 
                     response.redirect("/");
                     halt();
