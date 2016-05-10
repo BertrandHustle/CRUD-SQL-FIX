@@ -1,7 +1,6 @@
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import static spark.Spark.halt;
@@ -11,8 +10,7 @@ public class Main {
     //list of forms (used to get forms by identity)
     static ArrayList<Form> formList = new ArrayList<>();
 
-    //list of forms in string form
-    static ArrayList<String> formStrings = new ArrayList<>();
+    static int currentID;
 
     public static void main (String[] args){
 
@@ -33,7 +31,9 @@ public class Main {
                             //returns new messages page
                             String userName = request.session().attribute("userName");
                             hash.put("userName", userName);
-                            hash.put("formStrings", formStrings);
+                            hash.put("formList", formList);
+                            hash.put("number", request.session().attribute("ID"));
+
                             return new ModelAndView(hash, "form.mustache");
                         }
 
@@ -46,7 +46,7 @@ public class Main {
         //login
         Spark.post(
                 "/login",
-                //this doesnt need password!
+                //this doesn't need password!
 
                 (request, response) -> {
 
@@ -95,45 +95,80 @@ public class Main {
                     String title = request.queryParams("title");
                     String genre = request.queryParams("genre");
                     String system = request.queryParams("system");
+                    int ID;
+
+                    if (formList.size() == 0){
+                        ID = 0;
+                    } else {
+                        //sets ID to 1 plus the ID of the last entry in the list
+                        ID = formList.get(formList.size()-1).getID()+1;
+                    }
+
+                    //currentID = ID;
+
                     String userName = request.session().attribute("userName");
 
-
-                    //if user clicks edit
-
-                    //if user clicks delete
-
-                    //if user clicks "submit"
-
                     //puts new form into arraylist (in string form)
-                    Form form = new Form(title, genre, system);
+                    Form form = new Form(title, genre, system, ID);
                     formList.add(form);
-                    formStrings.add(form.toString());
-                    //System.out.println((formStrings.get(0)));
+
+                    request.session().attribute("ID", ID);
+
+                    //this is the ID we pass into the mustache
+                    hash.put("number", ID);
+                    hash.put("formList", formList);
 
                     //reloads page
-                    response.redirect("/");
-                    halt();
 
-                    return "";
-                }
+                    return new ModelAndView(hash, "form.mustache");
+                },
 
-
+            new MustacheTemplateEngine()
         );
 
         Spark.get(
                 "/edit",
                 (request, response) -> {
                     HashMap hash = new HashMap();
+                    int ID = request.session().attribute("ID");
+                    Form form = formList.get(ID);
+                    hash.put("form", form);
+
                     return new ModelAndView(hash, "edit.mustache");
                 },
-                new MustacheTemplateEngine()
+        new MustacheTemplateEngine()
         );
+
+        Spark.post(
+                "/edit",
+                (request, response) -> {
+                    HashMap hash = new HashMap();
+                    int ID = request.session().attribute("ID");
+                    Form form = formList.get(ID);
+
+                    (formList.get(ID)).setTitle(request.queryParams("title"));
+                    (formList.get(ID)).setGenre(request.queryParams("genre"));
+                    (formList.get(ID)).setSystem(request.queryParams("system"));
+
+                    hash.put("form", form);
+
+                    response.redirect("/");
+                    halt();
+                    return "";
+                }
+        );
+
+        //make this a get?
 
         Spark.post(
                 "/delete",
                 (request, response) -> {
 
-                    formList.remove(Integer.parseInt("number"));
+                    try {
+                        formList.remove(formList.get(Integer.parseInt(request.queryParams("number"))));
+                    } catch (IndexOutOfBoundsException ioobe){
+
+                    }
 
                     response.redirect("/");
                     halt();
@@ -141,7 +176,6 @@ public class Main {
 
                 }
         );
-
 
     }
 
