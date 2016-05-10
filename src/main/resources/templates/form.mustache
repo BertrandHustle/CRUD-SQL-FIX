@@ -9,29 +9,26 @@
 <a href="/logout">Logout</a>
 </h1>
 
-<form action="/delete" method="post">
 <ol>
     {{#formList}}
         <li>
-            {{.}}
-            <input type="hidden" name="number" value={{ID}}>
-            <button action="/delete" type="submit" name="delete">Delete</button>
-        </li>
-    {{/formList}}
-</ol>
-</form>
 
-<form action="/edit" method="get">
-<ol>
-    {{#formList}}
-        <li>
             {{.}}
-            <input type="hidden" name="number" value={{ID}}>
-            <button action="/edit" type="submit" name="edit">Edit</button>
+
+            <form action="/delete" method="post">
+            <input type="hidden" name="number" value="{{ID}}">
+            <button type="submit" name="delete">Delete</button>
+            </form>
+
+            <form action="/edit" method="get">
+            <input type="hidden" name="number" value="{{ID}}">
+            <button type="submit" name="edit">Edit</button>
+            </form>
+
+
         </li>
     {{/formList}}
 </ol>
-</form>
 
 <form action="/form" method="post">
     Title

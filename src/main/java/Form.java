@@ -48,6 +48,6 @@ public class Form {
     }
 
     public String toString() {
-        return(title + " " + genre + " " + system + " " + ID);
+        return("Title: " +  title + " Genre: " + genre + " System: " + system);
     }
 }

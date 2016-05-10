@@ -113,7 +113,7 @@ public class Main {
                     //this is what we pass into the mustache
                     hash.put("form", form);
                     hash.put("formList", formList);
-                    //hash.put("formID", formIntegerHashMap);
+                    hash.put("userName", userName);
 
                     //reloads page
 
