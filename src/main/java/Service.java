@@ -97,4 +97,17 @@ public class Service {
         return forms;
     }
 
-}
+    public void updateForm(int id, String title, String genre, String system, int userId) throws SQLException {
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE form SET title = ?, genre = ?, system = ?, userId = ? WHERE id = ?");
+            statement.setString(1, title);
+            statement.setString(2, genre);
+            statement.setString(3, system);
+            statement.setInt(4, userId);
+            statement.setInt(5, id);
+            statement.executeUpdate();
+        }
+
+    }
+
+

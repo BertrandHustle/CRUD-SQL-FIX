@@ -101,6 +101,34 @@ public class ServiceTests {
 
     }
 
+    /**
+     * Given a form
+     * When method is run with form.values
+     * Then form is updated properly
+     * @throws SQLException
+     */
+
+    @Test
+    public void whenUpdatedThenReturnsUpdatedForm() throws SQLException {
+
+        //arrange
+        service.initDatabase();
+        Form form = new Form ("Mario", "Platform", "NES", 1);
+        Form form2 = new Form ("Zelda", "RPG", "NES", 2);
+        User user = new User ("name", "test");
+
+        //act
+        service.insertForm(form);
+        service.insertForm(form2);
+        service.insertUser(user);
+        service.updateForm(1, "Contra", "Action", "GG", 1);
+        Form testForm = service.selectForm(1);
+
+        //assert
+        assertThat(testForm.getTitle(), is("Contra"));
+
+    }
+
     @After
     public void after() throws SQLException {
 
