@@ -108,6 +108,14 @@ public class Service {
             statement.executeUpdate();
         }
 
+    public void deleteForm(int id) throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM form WHERE id = ?");
+        statement.setInt(1, id);
+        statement.executeUpdate();
+
     }
+
+}
 
 

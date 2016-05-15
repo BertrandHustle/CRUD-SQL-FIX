@@ -129,6 +129,35 @@ public class ServiceTests {
 
     }
 
+    /**
+     * Given a form id
+     * When method is executed
+     * Then form is deleted from table
+     * @throws SQLException
+     */
+
+    @Test
+    public void whenIdGivenFormDeleted() throws SQLException {
+
+        //arrange
+        service.initDatabase();
+        Form form = new Form ("Mario", "Platform", "NES", 1);
+        Form form2 = new Form ("Zelda", "RPG", "NES", 2);
+        User user = new User ("name", "test");
+
+        //act
+        service.insertForm(form);
+        service.insertForm(form2);
+        service.insertUser(user);
+        service.deleteForm(2);
+        ArrayList<Form> testForms = service.selectAllForms();
+
+        //assert
+        assertThat(testForms.size(), is (1));
+
+
+    }
+
     @After
     public void after() throws SQLException {
 
