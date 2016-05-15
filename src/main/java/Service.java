@@ -38,18 +38,45 @@ public class Service {
         while(resultSet.next()){
 
             User user = new User(
-
                     resultSet.getString("name"),
                     resultSet.getString("password")
-
             );
-
             selectedUser.add(user);
-
         }
-
         return selectedUser.get(0);
+    }
+
+    public void insertForm(Form form) throws SQLException{
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO form VALUES(NULL, ?, ?, ?, ?)");
+        preparedStatement.setString(1, form.getTitle());
+        preparedStatement.setString(2, form.getGenre());
+        preparedStatement.setString(3, form.getSystem());
+        preparedStatement.setInt(4, form.getUserId());
+        preparedStatement.executeUpdate();
 
     }
+
+    public Form selectForm(int id) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form WHERE id=?");
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Form> selectedForm = new ArrayList<>();
+        while(resultSet.next()){
+
+            Form form = new Form(
+                    resultSet.getString("title"),
+                    resultSet.getString("genre"),
+                    resultSet.getString("system"),
+                    resultSet.getInt("userId")
+            );
+
+            selectedForm.add(form);
+        }
+        return selectedForm.get(0);
+
+    }
+
+    //public ArrayList<Form>
 
 }

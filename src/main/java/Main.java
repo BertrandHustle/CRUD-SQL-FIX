@@ -107,23 +107,24 @@ public class Main {
                     HashMap hash = new HashMap();
 
                     //creates new form
+                    //todo: incorporate user data to create user id
 
                     String title = request.queryParams("title");
                     String genre = request.queryParams("genre");
                     String system = request.queryParams("system");
-                    int ID;
+                    int userId;
 
                     if (formList.size() == 0){
-                        ID = 0;
+                        userId = 0;
                     } else {
                         //sets ID to 1 plus the ID of the last entry in the list
-                        ID = formList.get(formList.size()-1).getID()+1;
+                        userId = formList.get(formList.size()-1).getUserId()+1;
                     }
 
                     String userName = request.session().attribute("userName");
 
                     //puts new form into arraylist
-                    Form form = new Form(title, genre, system, ID);
+                    Form form = new Form(title, genre, system, userId);
                     formList.add(form);
 
                     //puts new form into hashmap by ID
@@ -152,7 +153,7 @@ public class Main {
 
                     try {
                         for (Form form : formList) {
-                            if (form.getID() == ID){
+                            if (form.getUserId() == ID){
                                 index = formList.indexOf(form);
                             }
                         }
@@ -178,7 +179,7 @@ public class Main {
 
                     try {
                         for (Form form : formList) {
-                            if (form.getID() == ID){
+                            if (form.getUserId() == ID){
                                 index = formList.indexOf(form);
                             }
                         }
@@ -211,7 +212,7 @@ public class Main {
 
                     try {
                         for (Form form : formList) {
-                            if (form.getID() == ID){
+                            if (form.getUserId() == ID){
                                 index = formList.indexOf(form);
                             }
                         }

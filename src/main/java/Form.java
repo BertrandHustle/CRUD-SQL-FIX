@@ -6,13 +6,13 @@ public class Form {
     String title;
     String genre;
     String system;
-    int ID;
+    int userId;
 
-    public Form(String title, String genre, String system, int ID) {
+    public Form(String title, String genre, String system, int userId) {
         this.title = title;
         this.genre = genre;
         this.system = system;
-        this.ID = ID;
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -39,12 +39,12 @@ public class Form {
         this.system = system;
     }
 
-    public int getID() {
-        return ID;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String toString() {

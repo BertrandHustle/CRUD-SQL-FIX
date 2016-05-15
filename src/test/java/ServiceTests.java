@@ -49,6 +49,28 @@ public class ServiceTests {
         assertThat(testUser.getName(), is("Scott"));
     }
 
+    /**
+     * Given a Form
+     * When Form is inserted and queried by id
+     * Then Form is returned
+     * @throws SQLException
+     */
+
+    @Test
+    public void whenFormInsertedReturnsForm() throws SQLException{
+        //arrange
+        service.initDatabase();
+        Form form = new Form ("Mario", "Platform", "NES", 1);
+
+        //act
+        service.insertForm(form);
+        Form testForm = service.selectForm(1);
+
+        //assert
+        assertThat(testForm.getUserId(), is(1));
+
+    }
+
     @After
     public void after() throws SQLException {
 
