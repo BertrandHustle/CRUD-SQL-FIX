@@ -61,9 +61,11 @@ public class ServiceTests {
         //arrange
         service.initDatabase();
         Form form = new Form ("Mario", "Platform", "NES", 1);
+        User user = new User ("name", "test");
 
         //act
         service.insertForm(form);
+        service.insertUser(user);
         Form testForm = service.selectForm(1);
 
         //assert

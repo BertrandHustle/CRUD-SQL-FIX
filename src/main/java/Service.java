@@ -57,7 +57,7 @@ public class Service {
     }
 
     public Form selectForm(int id) throws SQLException{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form WHERE id=?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form INNER JOIN user ON user.id = form.Id WHERE user.Id = ?");
         statement.setInt(1, id);
 
         ResultSet resultSet = statement.executeQuery();
