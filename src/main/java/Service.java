@@ -77,6 +77,24 @@ public class Service {
 
     }
 
-    //public ArrayList<Form>
+    public ArrayList<Form> selectAllForms() throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form INNER JOIN user ON user.ID");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Form> forms = new ArrayList<>();
+        while(resultSet.next()){
+
+            Form form = new Form(
+                    resultSet.getString("title"),
+                    resultSet.getString("genre"),
+                    resultSet.getString("system"),
+                    resultSet.getInt("userId")
+            );
+
+            forms.add(form);
+        }
+        return forms;
+    }
 
 }

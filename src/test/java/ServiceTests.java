@@ -7,6 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -70,6 +71,33 @@ public class ServiceTests {
 
         //assert
         assertThat(testForm.getUserId(), is(1));
+
+    }
+
+    /**
+     * Given a table
+     * When method is executed
+     * Then arraylist of all entries owned by user is returned
+     * @throws SQLException
+     */
+
+    @Test
+    public void whenTableGivenThenFormArraylistReturned() throws SQLException {
+
+        //arrange
+        service.initDatabase();
+        Form form = new Form ("Mario", "Platform", "NES", 1);
+        Form form2 = new Form ("Zelda", "RPG", "NES", 1);
+        User user = new User ("name", "test");
+
+        //act
+        service.insertForm(form);
+        service.insertForm(form2);
+        service.insertUser(user);
+        ArrayList<Form> testForms = service.selectAllForms();
+
+        //assert
+        assertThat(testForms.size(), is(2));
 
     }
 
