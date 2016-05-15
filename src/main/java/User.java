@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /**
  * User class
@@ -8,6 +7,7 @@ public class User {
     //properties
     String name;
     String password;
+    int id;
 
     public User(String name, String password) {
         this.name = name;
@@ -28,5 +28,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
