@@ -39,7 +39,7 @@ public class ServiceTests {
     public void whenUserInsertedReturnsUser() throws SQLException{
         //arrange
         service.initDatabase();
-        User user = new User("Scott", "testPass");
+        User user = new User("Scott");
 
         //act
         service.insertUser(user);
@@ -62,7 +62,7 @@ public class ServiceTests {
         //arrange
         service.initDatabase();
         Form form = new Form ("Mario", "Platform", "NES", 1);
-        User user = new User ("name", "test");
+        User user = new User ("name");
 
         //act
         service.insertForm(form);
@@ -88,7 +88,7 @@ public class ServiceTests {
         service.initDatabase();
         Form form = new Form ("Mario", "Platform", "NES", 1);
         Form form2 = new Form ("Zelda", "RPG", "NES", 1);
-        User user = new User ("name", "test");
+        User user = new User ("name");
 
         //act
         service.insertForm(form);
@@ -115,7 +115,7 @@ public class ServiceTests {
         service.initDatabase();
         Form form = new Form ("Mario", "Platform", "NES", 1);
         Form form2 = new Form ("Zelda", "RPG", "NES", 2);
-        User user = new User ("name", "test");
+        User user = new User ("name");
 
         //act
         service.insertForm(form);
@@ -143,7 +143,7 @@ public class ServiceTests {
         service.initDatabase();
         Form form = new Form ("Mario", "Platform", "NES", 1);
         Form form2 = new Form ("Zelda", "RPG", "NES", 2);
-        User user = new User ("name", "test");
+        User user = new User ("name");
 
         //act
         service.insertForm(form);

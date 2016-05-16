@@ -13,7 +13,7 @@ import static spark.Spark.halt;
 public class Main {
 
     //list of forms (used to get forms by identity)
-    static ArrayList<Form> formList = new ArrayList<>();
+    //static ArrayList<Form> formList = new ArrayList<>();
     //static HashMap<Integer, Form> formIntegerHashMap = new HashMap<>();
 
     public static void main (String[] args) throws SQLException{
@@ -46,18 +46,24 @@ public class Main {
 
                         } else {
 
-                            //returns new messages page
-                            String userName = request.session().attribute("userName");
-                            hash.put("userName", userName);
-                            hash.put("formList", formList);
-                            //hash.put("formID", formIntegerHashMap);
+                        String userName = request.session().attribute("userName");
+                        ArrayList<User> users = service.selectAllUsers();
 
-                            return new ModelAndView(hash, "form.mustache");
+                        //checks if user already exists in database
+                        if (!users.contains(userName)) {
+                            User user = new User(userName);
+                            service.insertUser(user);
                         }
 
-                    },
+                        //returns new messages page
+                        hash.put("userName", userName);
+                        hash.put("formList", service.selectAllForms());
 
-                    new MustacheTemplateEngine()
+                        return new ModelAndView(hash, "form.mustache");
+                    }
+                },
+
+            new MustacheTemplateEngine()
 
         );
 
@@ -70,10 +76,14 @@ public class Main {
 
                     String userName = request.queryParams("loginName");
 
-                    if (!request.session().attributes().contains("userName")){
+                    if (!request.session().attributes().contains("userName")) {
 
                         //puts current userName/Password in session
                         request.session().attribute("userName", userName);
+                        /*
+                        User user = new User(userName);
+                        service.insertUser(user);
+                        */
 
                         response.redirect("/?loggedIn=true");
 
@@ -106,29 +116,28 @@ public class Main {
 
                     HashMap hash = new HashMap();
 
-                    //creates new form
-                    //todo: incorporate user data to create user id
-
                     String title = request.queryParams("title");
                     String genre = request.queryParams("genre");
                     String system = request.queryParams("system");
-                    int userId;
+                    //sets form id to user id
+                    int userId = service.selectUser(request.session().attribute("userName")).getId();
 
+                    //creates new form
+                    Form form = new Form (title, genre, system, userId);
+                    service.insertForm(form);
+
+                    /*
                     if (formList.size() == 0){
                         userId = 0;
                     } else {
                         //sets ID to 1 plus the ID of the last entry in the list
                         userId = formList.get(formList.size()-1).getUserId()+1;
                     }
+                    */
 
                     String userName = request.session().attribute("userName");
 
-                    //puts new form into arraylist
-                    Form form = new Form(title, genre, system, userId);
-                    formList.add(form);
-
-                    //puts new form into hashmap by ID
-                    //formIntegerHashMap.put(ID, form);
+                    ArrayList<Form> formList = service.selectAllForms();
 
                     //this is what we pass into the mustache
                     hash.put("form", form);
@@ -149,8 +158,11 @@ public class Main {
                     HashMap hash = new HashMap();
                     int ID = Integer.parseInt(request.queryParams("number"));
 
-                    int index = 0;
+                    //int index = 0;
 
+                    Form form = service.selectForm(ID);
+
+                    /*
                     try {
                         for (Form form : formList) {
                             if (form.getUserId() == ID){
@@ -162,6 +174,8 @@ public class Main {
                     }
 
                     Form form = formList.get(index);
+                    */
+
                     hash.put("form", form);
 
                     return new ModelAndView(hash, "edit.mustache");
@@ -174,9 +188,14 @@ public class Main {
                 (request, response) -> {
                     HashMap hash = new HashMap();
                     int ID = Integer.parseInt(request.queryParams("change"));
+                    int userId = service.selectUser(request.session().attribute("userName")).getId();
 
-                    int index = 0;
 
+                    //int index = 0;
+
+                    Form form = service.selectForm(ID);
+
+                    /*
                     try {
                         for (Form form : formList) {
                             if (form.getUserId() == ID){
@@ -188,10 +207,18 @@ public class Main {
                     }
 
                     Form form = formList.get(index);
+                    */
 
-                    form.setTitle(request.queryParams("title"));
-                    form.setGenre(request.queryParams("genre"));
-                    form.setSystem(request.queryParams("system"));
+                    String title = request.queryParams("title");
+                    String genre = request.queryParams("genre");
+                    String system = request.queryParams("system");
+
+                    service.updateForm(ID, title, genre, system, userId);
+
+                    //likely unnecessary
+                    form.setTitle(title);
+                    form.setGenre(genre);
+                    form.setSystem(system);
 
                     hash.put("form", form);
 
@@ -208,8 +235,9 @@ public class Main {
                     //make this its own method
 
                     int ID = Integer.parseInt(request.queryParams("number"));
-                    int index = 0;
+                    //int index = 0;
 
+                    /*
                     try {
                         for (Form form : formList) {
                             if (form.getUserId() == ID){
@@ -221,6 +249,9 @@ public class Main {
                     }
 
                     formList.remove(index);
+                    */
+
+                    service.deleteForm(ID);
 
                     response.redirect("/");
                     halt();

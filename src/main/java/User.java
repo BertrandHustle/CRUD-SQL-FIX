@@ -6,12 +6,12 @@ public class User {
 
     //properties
     String name;
-    String password;
+    //String password;
     int id;
 
-    public User(String name, String password) {
+    public User(String name) {
         this.name = name;
-        this.password = password;
+        //this.password = password;
     }
 
     public String getName() {
@@ -20,14 +20,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getId() {
