@@ -48,9 +48,13 @@ public class Main {
 
                         String userName = request.session().attribute("userName");
                         ArrayList<User> users = service.selectAllUsers();
+                        ArrayList<String> userNames = new ArrayList<String>();
+                        for (User user : users){
+                            userNames.add(user.getName());
+                        }
 
                         //checks if user already exists in database
-                        if (!users.contains(userName)) {
+                        if (!userNames.contains(userName)) {
                             User user = new User(userName);
                             service.insertUser(user);
                         }
