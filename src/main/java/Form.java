@@ -7,12 +7,14 @@ public class Form {
     String genre;
     String system;
     int userId;
+    int id;
 
-    public Form(String title, String genre, String system, int userId) {
+    public Form(String title, String genre, String system, int userId, int id) {
         this.title = title;
         this.genre = genre;
         this.system = system;
         this.userId = userId;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -45,6 +47,14 @@ public class Form {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String toString() {

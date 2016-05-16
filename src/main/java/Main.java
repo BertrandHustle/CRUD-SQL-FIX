@@ -125,9 +125,10 @@ public class Main {
                     String system = request.queryParams("system");
                     //sets form id to user id
                     int userId = service.selectUser(request.session().attribute("userName")).getId();
+                    int id = 0;
 
                     //creates new form
-                    Form form = new Form (title, genre, system, userId);
+                    Form form = new Form (title, genre, system, userId, id);
                     service.insertForm(form);
 
                     /*
