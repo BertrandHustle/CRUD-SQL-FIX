@@ -53,15 +53,18 @@ public class Main {
                             userNames.add(user.getName());
                         }
 
+
                         //checks if user already exists in database
                         if (!userNames.contains(userName)) {
                             User user = new User(userName);
                             service.insertUser(user);
                         }
 
+                        int userId = service.selectUser(userName).getId();
+
                         //returns new messages page
                         hash.put("userName", userName);
-                        hash.put("formList", service.selectAllForms());
+                        hash.put("formList", service.selectAllForms(userId));
 
                         return new ModelAndView(hash, "form.mustache");
                     }
@@ -139,7 +142,7 @@ public class Main {
 
                     String userName = request.session().attribute("userName");
 
-                    ArrayList<Form> formList = service.selectAllForms();
+                    ArrayList<Form> formList = service.selectAllForms(userId);
 
                     //this is what we pass into the mustache
                     hash.put("form", form);

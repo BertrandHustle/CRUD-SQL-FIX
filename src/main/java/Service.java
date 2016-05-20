@@ -82,9 +82,10 @@ public class Service {
         return selectedForm.get(0);
     }
 
-    public ArrayList<Form> selectAllForms() throws SQLException {
+    public ArrayList<Form> selectAllForms(int userId) throws SQLException {
 
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form INNER JOIN user ON user.ID = form.USERID");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM form INNER JOIN user ON user.ID = form.USERID where USERID = ?");
+        statement.setInt(1, userId);
 
         ResultSet resultSet = statement.executeQuery();
         ArrayList<Form> forms = new ArrayList<>();

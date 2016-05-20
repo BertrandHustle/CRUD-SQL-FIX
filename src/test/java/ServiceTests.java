@@ -94,7 +94,7 @@ public class ServiceTests {
         service.insertForm(form);
         service.insertForm(form2);
         service.insertUser(user);
-        ArrayList<Form> testForms = service.selectAllForms();
+        ArrayList<Form> testForms = service.selectAllForms(1);
 
         //assert
         assertThat(testForms.size(), is(2));
@@ -150,7 +150,7 @@ public class ServiceTests {
         service.insertForm(form2);
         service.insertUser(user);
         service.deleteForm(2);
-        ArrayList<Form> testForms = service.selectAllForms();
+        ArrayList<Form> testForms = service.selectAllForms(1);
 
         //assert
         assertThat(testForms.size(), is (1));
