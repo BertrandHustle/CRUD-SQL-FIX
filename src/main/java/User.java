@@ -5,9 +5,9 @@
 public class User {
 
     //properties
-    String name;
+    private String name;
     //String password;
-    int id;
+    private int id;
 
     public User(String name) {
         this.name = name;

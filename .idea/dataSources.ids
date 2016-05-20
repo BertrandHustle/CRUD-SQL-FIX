@@ -7,7 +7,7 @@
     <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
     <schema name="PUBLIC" catalog="MAIN"/>
     <table name="FORM" schema="PUBLIC" catalog="MAIN" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQ0JBM0VFOTlfQzA5M180OTJBXzg4QjZfQjIyOEQ3N0RGNThBKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNkUzOEYwMTJfMDIxOV80RTdGX0I1QzRfRDZCMjNGOEIzMTFDKQ==" autoIncrement="true"/>
       <column name="TITLE" sqlType="VARCHAR" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="GENRE" sqlType="VARCHAR" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="SYSTEM" sqlType="VARCHAR" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
@@ -15,9 +15,8 @@
       <primary-key name="CONSTRAINT_2" columns="ID"/>
     </table>
     <table name="USER" schema="PUBLIC" catalog="MAIN" type="TABLE">
-      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfM0M2MjY1MjlfQUM3RV80NTA3XzhDOERfRTI5OUZDQzIyRERCKQ==" autoIncrement="true"/>
+      <column name="ID" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQTZFRDkzNjlfNDRBN180OUI3XzlCNENfRjI3RTY2NDRGNEFCKQ==" autoIncrement="true"/>
       <column name="NAME" sqlType="VARCHAR" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <column name="PASSWORD" sqlType="VARCHAR" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="CONSTRAINT_27" columns="ID"/>
     </table>
   </data-source>

@@ -89,13 +89,9 @@ public class Main {
                         service.insertUser(user);
                         */
 
-                        response.redirect("/?loggedIn=true");
-
-                    } else {
-
-                        response.redirect("/?loggedIn=false");
-
                     }
+
+                    response.redirect("/");
 
                     return "";
 
@@ -123,8 +119,9 @@ public class Main {
                     String title = request.queryParams("title");
                     String genre = request.queryParams("genre");
                     String system = request.queryParams("system");
+                    User user = service.selectUser(request.session().attribute("userName"));
                     //sets form id to user id
-                    int userId = service.selectUser(request.session().attribute("userName")).getId();
+                    int userId = user.getId();
                     int id = 0;
 
                     //creates new form
